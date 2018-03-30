@@ -1,4 +1,4 @@
-package bond.generation.utils;
+package bond.generation.terraingen;
 
 public enum TerrainType {
 

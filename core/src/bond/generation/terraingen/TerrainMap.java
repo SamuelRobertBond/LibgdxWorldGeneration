@@ -3,8 +3,8 @@ package bond.generation.terraingen;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+import bond.generation.utils.Miner;
 import bond.generation.utils.Quadrant;
-import bond.generation.utils.TerrainType;
 import bond.generation.utils.Utils;
 
 public class TerrainMap {
@@ -12,7 +12,7 @@ public class TerrainMap {
 	private TerrainType map[][];
 	private int width;
 	private int height;
-	private final int MINER_COUNT = 16;
+	private final int MINER_COUNT = 25;
 	
 	//Generation Variables
 	private final float SPAWN_RATE = 0.3f;
@@ -49,13 +49,13 @@ public class TerrainMap {
 	
 	public void generate(){
 		
-		LinkedList<Miner> miners = generateInitMiners(MINER_COUNT);
+		LinkedList<TerrainMiner> miners = generateInitMiners(MINER_COUNT);
 		
 		while(!miners.isEmpty()){
 			for(int i = 0; i < miners.size(); ++i){
 				
 				//Retrieve the miner
-				Miner miner = miners.get(i);
+				TerrainMiner miner = miners.get(i);
 				
 				//Move the miner
 				//Check if the miner was able to make a move
@@ -98,10 +98,10 @@ public class TerrainMap {
 		}
 	}
 	
-	private LinkedList<Miner> generateInitMiners(int minerCount){
+	private LinkedList<TerrainMiner> generateInitMiners(int minerCount){
 		
-		LinkedList<Miner> miners = new LinkedList<Miner>();
-		Quadrant[] points = getStartingPoints(MINER_COUNT);
+		LinkedList<TerrainMiner> miners = new LinkedList<TerrainMiner>();
+		Quadrant[] points = Utils.createQuadrants(MINER_COUNT, width, height);
 		
 		for(int i = 0; i < minerCount; ++i){
 			
@@ -125,39 +125,23 @@ public class TerrainMap {
 				}
 			}
 			
-			//If no terrain is left, reinstantiate terrain
+			//If no terrain is left, refill the terrain pool
 			if(terrain_odds.isEmpty()){
 				terrain_odds = used_terrain;
 				used_terrain = new HashMap<Float, TerrainType>();
 			}
 			
-			miners.add( new Miner(points[i].centerX, points[i].centerY, map, type));
+			TerrainMiner miner = new TerrainMiner(points[i].centerX, points[i].centerY, map, type);
+			miners.add(miner);
 		}
 		
 		return miners;
 	}
 	
-	private Miner generateMiner(int x, int y, TerrainType type){
-		return new Miner(x, y, map, type);
+	private TerrainMiner generateMiner(int x, int y, TerrainType type){
+		return new TerrainMiner(x, y, map, type);
 	}
 	
-	private Quadrant[] getStartingPoints(int minerCount){
-		
-		Quadrant[] points = new Quadrant[minerCount];
-		int div = (int)Math.sqrt(minerCount);
-		
-		int count = 0;
-		
-		for(int x = 0; x < div; ++x){
-			for(int y = 0; y < div; ++y){
-				points[count] = new Quadrant( (int)(width * ((float)x / (float)div)), (int)(height * ((float)y / (float)div)), width/div, height/div);
-				++count;
-			}
-		}
-		
-		return points;
-		
-	}
 	
 	public TerrainType[][] toArray(){
 		return map;

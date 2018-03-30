@@ -25,11 +25,8 @@ public class GdxGame extends ApplicationAdapter {
 	public void create () {
 		AssetLoader.load();
 		
-		TerrainMap terrainMap = new TerrainMap(30);
-		terrainMap.generate();
-		
 		cam = new OrthographicCamera(AssetLoader.V_WIDTH, AssetLoader.V_HEIGHT);
-		map = OverworldTiledMapGenerator.generateOverworld(terrainMap.toArray());
+		map = OverworldTiledMapGenerator.generateOverworld();
 		renderer = new OrthogonalTiledMapRenderer(map);
 		renderer.setView(cam);
 	}

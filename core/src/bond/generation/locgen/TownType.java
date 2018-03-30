@@ -1,4 +1,4 @@
-package bond.generation.utils;
+package bond.generation.locgen;
 
 public enum TownType {
 

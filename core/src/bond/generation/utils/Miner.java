@@ -1,30 +1,29 @@
-package bond.generation.terraingen;
+package bond.generation.utils;
 
 import java.util.LinkedList;
 import java.util.Stack;
 
-import bond.generation.utils.Direction;
-import bond.generation.utils.TerrainType;
-import bond.generation.utils.Utils;
-
 public class Miner {
 
-	private TerrainType type;
+	
 	private Stack<Direction> previous;
 	
-	private int x;
-	private int y;
+	protected int x;
+	protected int y;
 	
-	private TerrainType[][] map;
+	protected int mapWidth;
+	protected int mapHeight;
 	
 	private LinkedList<Direction> directions;
 	
-	public Miner(int x, int y, TerrainType[][] map, TerrainType type) {
+	public Miner(int x, int y, int mapWidth, int mapHeight) {
+		
+		
 		
 		this.x = x;
 		this.y = y;
-		this.map = map;
-		this.type = type;
+		this.mapWidth = mapWidth;
+		this.mapHeight = mapHeight;
 		
 		directions = new LinkedList<Direction>();
 		directions.add(Direction.UP);
@@ -34,10 +33,6 @@ public class Miner {
 		
 		previous = new Stack<Direction>();
 		
-	}
-
-	public TerrainType getType() {
-		return type;
 	}
 
 	public int getX() {
@@ -78,7 +73,6 @@ public class Miner {
 			if(directions.isEmpty()){
 				return false;
 			}
-			
 			return move();
 		}
 		
@@ -92,29 +86,20 @@ public class Miner {
 		directions.remove(dir);
 		
 		//Move the miner
-		x += x_offset;
-		y += y_offset;
-		
-		//Change the map
-		map[x][y] = type;
+		this.x += x_offset;
+		this.y += y_offset;
 		
 		return true;
 		
 	}
 
-	private boolean canMove(int x_offset, int y_offset) {
+	protected boolean canMove(int x_offset, int y_offset) {
 		
 		//In map bounds
-		if(x + x_offset < 0 || x + x_offset >= map.length || y + y_offset < 0 || y + y_offset >= map[0].length){
+		
+		if(x + x_offset < 0 || x + x_offset >= mapWidth || y + y_offset < 0 || y + y_offset >= mapHeight){
 			return false;
 		}
-		
-		//Checks if hitting terrain
-		if(map[x + x_offset][y + y_offset] != null){
-			return false;
-		}
-		
-		//both conditions are met
 		return true;
 	}
 	
