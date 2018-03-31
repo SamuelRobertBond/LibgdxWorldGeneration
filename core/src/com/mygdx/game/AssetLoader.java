@@ -40,11 +40,33 @@ public class AssetLoader {
 		townTextureMap = new HashMap<TownType, TextureRegion>();
 		townTextureMap.put(TownType.CITY, townTextures[0][0]);
 		
+		//Roads
 		TextureRegion roadTexture = new TextureRegion(new Texture(Gdx.files.internal("roads.png")));
 		TextureRegion roadTextures[][] = roadTexture.split(16, 16);
 		
 		roadTextureMap = new HashMap<RoadType, TextureRegion>();
 		roadTextureMap.put(RoadType.HORIZONTAL, roadTextures[0][0]);
+		roadTextureMap.put(RoadType.VERTICLE, roadTextures[0][1]);
+		
+		roadTextureMap.put(RoadType.LEFT_UP, new TextureRegion(roadTextures[0][2]));
+		roadTextures[0][2].flip(false, true);
+		roadTextureMap.put(RoadType.LEFT_DOWN, new TextureRegion(roadTextures[0][2]));
+		roadTextures[0][2].flip(true, false);
+		roadTextureMap.put(RoadType.RIGHT_DOWN, new TextureRegion(roadTextures[0][2]));
+		roadTextures[0][2].flip(false, true);
+		roadTextureMap.put(RoadType.RIGHT_UP, new TextureRegion(roadTextures[0][2]));
+		
+		roadTextureMap.put(RoadType.ALL, roadTextures[0][3]);
+		
+		roadTextureMap.put(RoadType.HORIZONTAL_UP, new TextureRegion(roadTextures[0][4]));
+		
+		roadTextures[0][4].flip(false, true);
+		roadTextureMap.put(RoadType.HORIZONTAL_DOWN, new TextureRegion(roadTextures[0][4]));
+		
+		roadTextureMap.put(RoadType.VERTICAL_RIGHT, new TextureRegion(roadTextures[0][5]));
+		
+		roadTextures[0][5].flip(true, false);
+		roadTextureMap.put(RoadType.VERTICAL_LEFT, new TextureRegion(roadTextures[0][5]));
 		
 		Gdx.app.log("AssetLoader", "All Assets Loaded");
 		

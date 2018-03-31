@@ -32,7 +32,7 @@ public class LocationQuadrant extends Quadrant{
 		city_x = Utils.getRandomInt(width) + x;
 		city_y = Utils.getRandomInt(height) + y;
 		
-		if(map[x][y] != null && map[x][y] != TerrainType.WATER) {
+		if(map[city_x][city_y] != null && map[city_x][city_y] != TerrainType.WATER) {
 			return true;
 		}
 		

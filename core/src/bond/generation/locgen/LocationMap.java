@@ -35,8 +35,6 @@ public class LocationMap {
 			}
 		}
 		
-		RoadMap map = new RoadMap(townMap);
-		
 		
 	}
 	
