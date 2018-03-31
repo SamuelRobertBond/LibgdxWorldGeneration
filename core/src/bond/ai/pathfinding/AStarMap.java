@@ -1,6 +1,6 @@
 package bond.ai.pathfinding;
 
-import bond.generation.terraingen.TerrainType;
+import bond.generation.overworld.terraingen.TerrainType;
 
 public class AStarMap {
 

@@ -6,9 +6,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-import bond.generation.locgen.TownType;
-import bond.generation.locgen.roadgeneration.RoadType;
-import bond.generation.terraingen.TerrainType;
+import bond.generation.overworld.locgen.TownType;
+import bond.generation.overworld.locgen.roadgeneration.RoadType;
+import bond.generation.overworld.terraingen.TerrainType;
 
 public class AssetLoader {
 	

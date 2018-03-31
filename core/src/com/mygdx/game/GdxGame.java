@@ -12,7 +12,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 
 import bond.generation.display.OverworldTiledMapGenerator;
-import bond.generation.terraingen.TerrainMap;
+import bond.generation.overworld.terraingen.TerrainMap;
 
 public class GdxGame extends ApplicationAdapter {
 	

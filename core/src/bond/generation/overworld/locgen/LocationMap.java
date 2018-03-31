@@ -1,7 +1,7 @@
-package bond.generation.locgen;
+package bond.generation.overworld.locgen;
 
-import bond.generation.locgen.roadgeneration.RoadMap;
-import bond.generation.terraingen.TerrainType;
+import bond.generation.overworld.locgen.roadgeneration.RoadMap;
+import bond.generation.overworld.terraingen.TerrainType;
 import bond.generation.utils.Quadrant;
 import bond.generation.utils.Utils;
 

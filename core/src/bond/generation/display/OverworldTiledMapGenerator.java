@@ -17,11 +17,11 @@ import bond.ai.pathfinding.Connection;
 import bond.ai.pathfinding.Node;
 import bond.ai.pathfinding.PathFindingUtils;
 import bond.ai.pathfinding.PathfindingResult;
-import bond.generation.locgen.LocationMap;
-import bond.generation.locgen.TownType;
-import bond.generation.locgen.roadgeneration.RoadType;
-import bond.generation.terraingen.TerrainMap;
-import bond.generation.terraingen.TerrainType;
+import bond.generation.overworld.locgen.LocationMap;
+import bond.generation.overworld.locgen.TownType;
+import bond.generation.overworld.locgen.roadgeneration.RoadType;
+import bond.generation.overworld.terraingen.TerrainMap;
+import bond.generation.overworld.terraingen.TerrainType;
 import bond.generation.utils.Utils;
 
 public class OverworldTiledMapGenerator {

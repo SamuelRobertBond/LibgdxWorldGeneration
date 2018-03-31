@@ -1,4 +1,4 @@
-package bond.generation.terraingen;
+package bond.generation.overworld.terraingen;
 
 import java.util.HashMap;
 import java.util.LinkedList;

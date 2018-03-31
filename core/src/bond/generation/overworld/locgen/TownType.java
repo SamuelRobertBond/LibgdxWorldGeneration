@@ -1,4 +1,4 @@
-package bond.generation.locgen;
+package bond.generation.overworld.locgen;
 
 public enum TownType {
 

@@ -1,4 +1,4 @@
-package bond.generation.locgen.roadgeneration;
+package bond.generation.overworld.locgen.roadgeneration;
 
 public enum RoadType {
 	
