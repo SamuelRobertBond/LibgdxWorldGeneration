@@ -17,6 +17,8 @@ import bond.ai.pathfinding.Connection;
 import bond.ai.pathfinding.Node;
 import bond.ai.pathfinding.PathFindingUtils;
 import bond.ai.pathfinding.PathfindingResult;
+import bond.generation.overworld.OverworldTile;
+import bond.generation.overworld.OverworldMap;
 import bond.generation.overworld.locgen.LocationMap;
 import bond.generation.overworld.locgen.TownType;
 import bond.generation.overworld.locgen.roadgeneration.RoadType;
@@ -24,67 +26,54 @@ import bond.generation.overworld.terraingen.TerrainMap;
 import bond.generation.overworld.terraingen.TerrainType;
 import bond.generation.utils.Utils;
 
-public class OverworldTiledMapGenerator {
+public class OverworldMapGenerator {
 
-	public static TiledMap generateOverworld(){
+	private static final int WORLD_SIZE = 30;
+
+
+	public static TiledMap generateOverworld(OverworldMap overworld){
 		
-		//Generate Terrain Map
-		TerrainMap terrainMap = new TerrainMap(30);
-		terrainMap.generate();
+		OverworldTile[][] overworldTileMap = overworld.getMap();
 		
-		TerrainType terrainArray[][] = terrainMap.toArray();
-		
-		int width = terrainArray.length;
-		int height = terrainArray[0].length;
+		int width = overworldTileMap.length;
+		int height = overworldTileMap[0].length;
 		
 		TiledMap map = new TiledMap();
 		MapLayers layers = map.getLayers();
 		
 		//Add Terrain Layer
 		TiledMapTileLayer terrain = new TiledMapTileLayer(width, height, 16, 16);
-		
-		//Adding all the terrain cells
-		for(int x = 0; x < width; ++x){
-			for(int y = 0; y < height; ++y){
-				Cell cell = new Cell();
-				cell.setTile(new StaticTiledMapTile(AssetLoader.terrainTextureMap.get(terrainArray[x][y])));
-				terrain.setCell(x, y, cell);
-			}
-		}
-		
-		
-		LocationMap locMap = new LocationMap(terrainArray);
-		TownType locArr[][] = locMap.getTownMap();
-		
-		//Add locations Layer
+		TiledMapTileLayer roads = new TiledMapTileLayer(width, height, 16, 16);
 		TiledMapTileLayer locations = new TiledMapTileLayer(width, height, 16, 16);
-				
+		
 		//Adding all the location cells
 		for(int x = 0; x < width; ++x){
 			for(int y = 0; y < height; ++y){
-				if(locArr[x][y] != null) {
+				
+				//Terrain settings
+				if(overworldTileMap[x][y].terrainType != null) {
 					Cell cell = new Cell();
-					cell.setTile(new StaticTiledMapTile(AssetLoader.townTextureMap.get(locArr[x][y])));
+					cell.setTile(new StaticTiledMapTile(AssetLoader.terrainTextureMap.get(overworldTileMap[x][y].terrainType)));
+					terrain.setCell(x, y, cell);
+				}
+				
+				//Location setting
+				if(overworldTileMap[x][y].locType != null) {
+					Cell cell = new Cell();
+					cell.setTile(new StaticTiledMapTile(AssetLoader.townTextureMap.get(overworldTileMap[x][y].locType)));
 					locations.setCell(x, y, cell);
 				}
+				
+				//Roads setting
+				if(overworldTileMap[x][y].roadType != null) {
+					Cell cell = new Cell();
+					cell.setTile(new StaticTiledMapTile(AssetLoader.roadTextureMap.get(overworldTileMap[x][y].roadType)));
+					roads.setCell(x, y, cell);
+				}
+				
 			}
 		}
 				
-		//Adding all the roads
-		RoadType[][] roadArray = getRoadsArray(terrainArray, locArr);
-		TiledMapTileLayer roads = new TiledMapTileLayer(width, height, 16, 16);
-		
-		//Adding all the location cells
-		for(int x = 0; x < width; ++x){
-			for(int y = 0; y < height; ++y){
-				if(roadArray[x][y] != null) {
-					Cell cell = new Cell();
-					cell.setTile(new StaticTiledMapTile(AssetLoader.roadTextureMap.get(roadArray[x][y])));
-					roads.setCell(x, y, cell);
-				}
-			}
-		}		
-		
 		layers.add(terrain);
 		layers.add(roads);
 		layers.add(locations);
@@ -151,6 +140,24 @@ public class OverworldTiledMapGenerator {
 	}
 
 
+	public static OverworldMap getOverworldTypeMap() {
+		
+		//Generate Terrain Map
+		TerrainMap terrainMap = new TerrainMap(WORLD_SIZE);
+		terrainMap.generate();
+		TerrainType terrainArray[][] = terrainMap.toArray();
+		
+		LocationMap locMap = new LocationMap(terrainArray);
+		TownType locArr[][] = locMap.getTownMap();
+		
+		RoadType[][] roadArray = getRoadsArray(terrainArray, locArr);
+		
+		return new OverworldMap(terrainArray, locArr, roadArray);
+		
+	}
+	
+	
+	
 	private static RoadType getRoadType(int x, int y, int roads[][]) {
 		
 		int width = roads.length;

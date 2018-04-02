@@ -19,6 +19,10 @@ public class Utils {
 		return rand.nextInt(range);
 	}
 	
+	public static long getRandomLong(){
+		return rand.nextLong();
+	}
+	
 	public static float getRandomFloat(){
 		return rand.nextFloat();
 	}
